@@ -1,25 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Accessible Document Processor</title>
-  </head>
-  <body>
-    <h1>Upload Your Document</h1>
-    <form method="POST" enctype="multipart/form-data">
-      <!-- The file input allows the user to choose a DOCX file -->
-      <input type="file" name="file" accept=".docx">
-      <button type="submit">Process Document</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Document Processor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+  <div class="w-96 bg-white p-6 rounded-lg shadow-lg text-center">
+    <h2 class="text-lg font-semibold mb-4">Upload Your File</h2>
+    <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
+      <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 cursor-pointer hover:bg-gray-100">
+        <p class="text-gray-500">
+          Drag & Drop your file here or <span class="text-blue-500">click to upload</span>
+        </p>
+        <input id="file-input" type="file" name="file" class="hidden" required>
+      </div>
+      <p id="file-name" class="mt-2 text-gray-600"></p>
+      <button id="upload-btn" type="button" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+        Upload
+      </button>
     </form>
-    <!-- Display any flash messages for errors or notifications -->
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
+
+    <!-- Uploaded File Name (remains displayed) -->
+    {% if uploaded_file %}
+      <div class="mt-4">
+        <p class="text-gray-600">Uploaded File: <span class="font-semibold">{{ uploaded_file }}</span></p>
+      </div>
+    {% endif %}
+
+    <!-- Processed File Info Section -->
+    <div id="processed-file-section">
+      {% if processed_file %}
+        <div class="mt-6">
+          <h3 class="text-md font-semibold">Processed File:</h3>
+          <p class="text-gray-600">{{ processed_file }}</p>
+          <a href="{{ url_for('download', filename=processed_file) }}" 
+             class="mt-2 inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+            Download
+          </a>
+        </div>
       {% endif %}
-    {% endwith %}
-  </body>
+    </div>
+  </div>
+
+  <script>
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const fileNameDisplay = document.getElementById('file-name');
+    const uploadBtn = document.getElementById('upload-btn');
+    const uploadForm = document.getElementById('uploadForm');
+    const processedFileSection = document.getElementById('processed-file-section');
+
+    // When the drop zone is clicked, trigger the file input
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    // Clear previous processed file details when a new file is selected
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = fileInput.files[0].name;
+        processedFileSection.innerHTML = ""; // Clear processed info if any
+      }
+    });
+
+    // Drag and drop events
+    dropZone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropZone.classList.add('bg-gray-200');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('bg-gray-200');
+    });
+    dropZone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropZone.classList.remove('bg-gray-200');
+      const files = event.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        fileNameDisplay.textContent = files[0].name;
+        processedFileSection.innerHTML = ""; // Clear previous processed info
+      }
+    });
+
+    // Upload button triggers form submission
+    uploadBtn.addEventListener('click', () => {
+      if (fileInput.files.length === 0) {
+        alert("Please select a file first.");
+      } else {
+        uploadForm.submit();
+      }
+    });
+
+    window.history.replaceState({}, document.title, window.location.pathname);
+
+  </script>
+</body>
 </html>
