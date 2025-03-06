@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Accessible Document Processor</title>
+  </head>
+  <body>
+    <h1>Upload Your Document</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <!-- The file input allows the user to choose a DOCX file -->
+      <input type="file" name="file" accept=".docx">
+      <button type="submit">Process Document</button>
+    </form>
+    <!-- Display any flash messages for errors or notifications -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </body>
+</html>
