@@ -1,43 +1,34 @@
-# PageMarker
 # Accessible Transcription Automation for LAS
 
-This project automates the process of converting and formatting Word documents (especially those converted from PDFs) to make them accessible. The tool leverages [python-docx](https://python-docx.readthedocs.io/) to handle document processing and formatting.
+This project was born out of my work as a transcription assistant at McMaster Library’s Library Accessibility Services. I built this tool to automate the repetitive task of reformatting Word documents (converted from PDFs) into a standardized, accessible format.
 
-## Features
+## Why I Made This
 
-- **Automatic Page Numbering:**  
-  Inserts slide markers (e.g., `[Slide 1]`, `[Slide 2]`, etc.) at each page break in the document. The page breaks are detected from the PDF-to-Word conversion process, where a new line is added before a new page.
-
-- **Image Handling and Alt Text Retention:**  
-  Copies images from the original document into the new document. The project extracts and retains the alt text from the source image (if available) and applies it to the corresponding image in the final document. This ensures that images remain accessible for screen readers.
-
-- **Preservation of Styles and Custom Formatting:**  
-  - **Clearing Formatting:** The script removes unnecessary formatting from text runs and paragraphs while preserving the underlying style name.
-  - **Custom Formatting:** It reapplies a custom set of formatting rules (such as font type, size, spacing, and boldness) based on the paragraph style. This ensures uniformity across the document and improves readability.
-
-- **Style Border Removal:**  
-  For styles that automatically include borders (like the "Title" style), the tool can remove these borders by modifying the underlying XML. This helps in preventing unwanted formatting artifacts in the final document.
-
-- **Modular Design:**  
-  The code is organized into separate modules for cleaner presentation and easier maintenance:
-  - `doc_processing.py`: Handles copying text, images, and inserting slide markers.
-  - `formatting.py`: Contains functions for clearing formatting, applying custom formatting, and removing unwanted style borders.
-  - `main.py`: The main script that imports functions from the other modules and executes the full document processing pipeline.
+- **Save Time:** I was spending too much time manually cleaning up documents after converting them from PDFs.
+- **Ensure Accessibility:** Making sure that documents meet accessibility standards (including proper image handling) is crucial.
+- **Automate the Workflow:** Curiosity and the need for automation drove me to create a tool that streamlines the entire process.
 
 ## How It Works
 
-1. **Add Page Numbers and Copy Content:**  
-   The `add_page_num` function reads the source document, detects page breaks, inserts slide markers, and copies text and images (including alt text for images) into a new document.
+1. **PDF Conversion:**  
+   Use ABBYY FineReader to convert your PDFs into Word documents. **Important:** Make sure to select the option to "create a new page for each page."
 
-2. **Clear Formatting:**  
-   The `clear_formatting` function removes extra formatting from the document while preserving text and style names, ensuring a clean slate for custom formatting.
+2. **Upload:**  
+   Upload the converted Word file via the web interface.
 
-3. **Apply Custom Formatting:**  
-   The `format_text` function applies a uniform set of formatting rules based on the style (e.g., Title, Heading 1, Heading 2) to improve document readability and ensure accessibility.
+3. **Processing:**  
+   - **Formatting:** Clears existing formatting and applies consistent styles for titles, headings, and regular text.
+   - **Page Numbers:** Automatically adds page numbers.
+   - **Accessibility:** Retains images and their text (including alt text) to ensure accessibility remains intact.
 
-4. **Remove Style Borders:**  
-   The `remove_style_borders` function edits the underlying style XML to remove unwanted borders (e.g., from the "Title" style).
+4. **Download:**  
+   Download the newly formatted document from the web app.
 
+## Built With
+
+- **[python-docx](https://python-docx.readthedocs.io/):** Manipulate and format Word documents.
+- **Flask:** Provides the simple web interface.
+- **Tailwind CSS:** Creates a clean, responsive UI.
 ## Prerequisites
 
 - Python 3.x
