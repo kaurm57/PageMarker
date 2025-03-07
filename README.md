@@ -33,6 +33,6 @@ This project was born out of my work as a transcription assistant at McMaster Li
 
 - Python 3.x
 - [python-docx](https://pypi.org/project/python-docx/) library (Install via `pip install python-docx`)
-
-## File Structure
+- Flask 3.10
+- Tailwind CSS
 
