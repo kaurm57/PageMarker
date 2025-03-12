@@ -2,6 +2,8 @@
 
 This project was born out of my work as a transcription assistant at McMaster Library’s Library Accessibility Services. I built this tool to automate the repetitive task of reformatting Word documents (converted from PDFs) into a standardized, accessible format.
 
+🚀 **Live Demo:** [kaurm57.pythonanywhere.com](https://kaurm57.pythonanywhere.com)  
+
 ## Why I Made This
 
 - **Save Time:** I was spending too much time manually cleaning up documents after converting them from PDFs.
@@ -24,15 +26,16 @@ This project was born out of my work as a transcription assistant at McMaster Li
 4. **Download:**  
    Download the newly formatted document from the web app.
 
+## Deployment
+
+The tool is now live and accessible through **PythonAnywhere**:  
+🔗 **[Try it out here](https://kaurm57.pythonanywhere.com)**  
+
 ## Built With
 
-- **[python-docx](https://python-docx.readthedocs.io/):** Manipulate and format Word documents.
-- **Flask:** Provides the simple web interface.
-- **Tailwind CSS:** Creates a clean, responsive UI.
-## Prerequisites
-
-- Python 3.x
-- [python-docx](https://pypi.org/project/python-docx/) library (Install via `pip install python-docx`)
-- Flask 3.10
-- Tailwind CSS
-
+- **Flask:** Lightweight framework for the web app.  
+- **python-docx:** Handles document processing and formatting.  
+- **lxml:** Ensures proper XML/HTML parsing for document structures.  
+- **Gunicorn:** WSGI server for deployment on PythonAnywhere.  
+- **Jinja2:** Template engine for the web interface.  
+- **Tailwind CSS:** Clean, responsive UI.  
